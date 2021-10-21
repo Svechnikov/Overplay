@@ -18,7 +18,10 @@ class DefaultGame(
     private var prevLocation: Location? = null
 
     override fun start(lifecycleOwner: LifecycleOwner) {
-        playerView.isVisible = false
+        playerView.let {
+            it.player = player
+            it.isVisible = false
+        }
         player.apply {
             setMediaItem(MediaItem.fromUri(URL))
             prepare()
