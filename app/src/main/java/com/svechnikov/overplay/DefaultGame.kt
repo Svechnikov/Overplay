@@ -8,19 +8,15 @@ import com.google.android.exoplayer2.SimpleExoPlayer
 import com.google.android.exoplayer2.ui.StyledPlayerView
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import kotlin.math.abs
 
 class DefaultGame(
     private val player: SimpleExoPlayer,
     private val playerView: StyledPlayerView,
     private val sensorEvents: SensorEvents,
+    private val rotationHandler: RotationHandler,
 ) : Game {
 
     private var prevLocation: Location? = null
-
-    private var lastRotationZEventTime = 0L
-
-    private var lastRotationXEventTime = 0L
 
     override fun start(lifecycleOwner: LifecycleOwner) {
         playerView.let {
@@ -75,27 +71,7 @@ class DefaultGame(
         }
     }
 
-    private fun checkRotation(x: Int, y: Int, z: Int) {
-        val time = System.currentTimeMillis()
-
-        if (abs(z) > 50 && time - lastRotationZEventTime > 750) {
-            if (z > 0) {
-                player.seekBack()
-            } else {
-                player.seekForward()
-            }
-            lastRotationZEventTime = time
-        }
-
-        if (abs(x) > 50 && time - lastRotationXEventTime > 950) {
-            if (x > 0) {
-                player.decreaseDeviceVolume()
-            } else {
-                player.increaseDeviceVolume()
-            }
-            lastRotationXEventTime = time
-        }
-    }
+    private fun checkRotation(x: Int, y: Int, z: Int) = rotationHandler.handleRotation(x, y, z)
 
     private companion object {
         const val URL = "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/WeAreGoingOnBullrun.mp4"

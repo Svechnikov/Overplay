@@ -12,6 +12,7 @@ interface Game {
             player: SimpleExoPlayer,
             playerView: StyledPlayerView,
             sensorEvents: SensorEvents,
-        ): Game = DefaultGame(player, playerView, sensorEvents)
+            rotationHandler: RotationHandler,
+        ): Game = DefaultGame(player, playerView, sensorEvents, rotationHandler)
     }
 }
