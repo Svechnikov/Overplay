@@ -15,6 +15,8 @@ class DefaultGame(
     private val sensorEvents: SensorEvents,
 ) : Game {
 
+    private var prevLocation: Location? = null
+
     override fun start(lifecycleOwner: LifecycleOwner) {
         playerView.isVisible = false
         player.apply {
@@ -52,7 +54,12 @@ class DefaultGame(
     }
 
     private fun checkLocation(location: Location) {
+        val prevLocation = this.prevLocation ?: location.also { prevLocation = it }
 
+        if (prevLocation.distanceTo(location) >= PAUSE_DISTANCE_METERS) {
+            this.prevLocation = location
+            playFromStart()
+        }
     }
 
     private fun checkRotation(x: Int, y: Int, z: Int) {
@@ -62,5 +69,6 @@ class DefaultGame(
     private companion object {
         const val URL = "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/WeAreGoingOnBullrun.mp4"
         const val DELAY = 4_000L
+        const val PAUSE_DISTANCE_METERS = 10f
     }
 }
