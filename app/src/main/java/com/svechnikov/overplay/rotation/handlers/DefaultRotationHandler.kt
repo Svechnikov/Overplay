@@ -1,4 +1,4 @@
-package com.svechnikov.overplay
+package com.svechnikov.overplay.rotation.handlers
 
 import com.google.android.exoplayer2.SimpleExoPlayer
 import kotlin.math.abs

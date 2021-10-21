@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.google.android.exoplayer2.SimpleExoPlayer
 import com.google.android.exoplayer2.ui.StyledPlayerView
 import com.svechnikov.overplay.rotation.GyroscopeRotationDetector
+import com.svechnikov.overplay.rotation.handlers.DefaultRotationHandler
 
 class PlaybackActivity : AppCompatActivity() {
 

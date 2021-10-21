@@ -6,6 +6,7 @@ import androidx.lifecycle.*
 import com.google.android.exoplayer2.MediaItem
 import com.google.android.exoplayer2.SimpleExoPlayer
 import com.google.android.exoplayer2.ui.StyledPlayerView
+import com.svechnikov.overplay.rotation.handlers.RotationHandler
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
