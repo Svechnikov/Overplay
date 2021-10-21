@@ -1,5 +1,6 @@
 package com.svechnikov.overplay
 
+import android.location.Location
 import androidx.core.view.isVisible
 import androidx.lifecycle.*
 import com.google.android.exoplayer2.MediaItem
@@ -11,6 +12,7 @@ import kotlinx.coroutines.launch
 class DefaultGame(
     private val player: SimpleExoPlayer,
     private val playerView: StyledPlayerView,
+    private val sensorEvents: SensorEvents,
 ) : Game {
 
     override fun start(lifecycleOwner: LifecycleOwner) {
@@ -34,6 +36,12 @@ class DefaultGame(
             }
             override fun onDestroy(owner: LifecycleOwner) = player.release()
         })
+
+        sensorEvents.apply {
+            setLocationListener(::checkLocation)
+            setRotationListener(::checkRotation)
+            setShakeListener(player::pause)
+        }
     }
 
     private fun playFromStart() {
@@ -41,6 +49,14 @@ class DefaultGame(
             seekToDefaultPosition()
             play()
         }
+    }
+
+    private fun checkLocation(location: Location) {
+
+    }
+
+    private fun checkRotation(x: Int, y: Int, z: Int) {
+
     }
 
     private companion object {

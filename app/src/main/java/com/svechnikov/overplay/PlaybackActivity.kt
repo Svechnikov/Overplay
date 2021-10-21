@@ -16,7 +16,8 @@ class PlaybackActivity : AppCompatActivity() {
     private fun createDefaultGame(): Game {
         val playerView = StyledPlayerView(this).also(::setContentView)
         val player = SimpleExoPlayer.Builder(this).build()
+        val sensorEvents = SensorEvents()
 
-        return Game.createDefault(player, playerView)
+        return Game.createDefault(player, playerView, sensorEvents)
     }
 }

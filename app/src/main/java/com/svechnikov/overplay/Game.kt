@@ -11,6 +11,7 @@ interface Game {
         fun createDefault(
             player: SimpleExoPlayer,
             playerView: StyledPlayerView,
-        ): Game = DefaultGame(player, playerView)
+            sensorEvents: SensorEvents,
+        ): Game = DefaultGame(player, playerView, sensorEvents)
     }
 }
