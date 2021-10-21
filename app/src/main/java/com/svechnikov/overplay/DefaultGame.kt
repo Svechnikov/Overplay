@@ -51,7 +51,7 @@ class DefaultGame(
 
         sensorEvents.apply {
             setLocationListener(::checkLocation)
-            setRotationListener(::checkRotation)
+            setRotationListener(rotationHandler::handleRotation)
             setShakeListener(player::pause)
         }
     }
@@ -71,8 +71,6 @@ class DefaultGame(
             playFromStart()
         }
     }
-
-    private fun checkRotation(x: Int, y: Int, z: Int) = rotationHandler.handleRotation(x, y, z)
 
     private companion object {
         const val URL = "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/WeAreGoingOnBullrun.mp4"
