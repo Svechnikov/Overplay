@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.exoplayer2.SimpleExoPlayer
 import com.google.android.exoplayer2.ui.StyledPlayerView
+import com.svechnikov.overplay.rotation.GyroscopeRotationDetector
 
 class PlaybackActivity : AppCompatActivity() {
 
@@ -16,7 +17,8 @@ class PlaybackActivity : AppCompatActivity() {
     private fun createDefaultGame(): Game {
         val playerView = StyledPlayerView(this).also(::setContentView)
         val player = SimpleExoPlayer.Builder(this).build()
-        val sensorEvents = SensorEvents(this)
+        val rotationDetector = GyroscopeRotationDetector()
+        val sensorEvents = SensorEvents(this, rotationDetector)
         val rotationHandler = DefaultRotationHandler(player)
 
         return Game.createDefault(player, playerView, sensorEvents, rotationHandler)

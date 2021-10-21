@@ -5,15 +5,16 @@ import android.content.Context.SENSOR_SERVICE
 import android.hardware.SensorManager
 import android.location.Location
 import com.squareup.seismic.ShakeDetector
-import com.svechnikov.overplay.rotation.GyroscopeRotationDetector
+import com.svechnikov.overplay.rotation.RotationDetector
 
-class SensorEvents(context: Context) : ShakeDetector.Listener {
+class SensorEvents(
+    context: Context,
+    private val rotationDetector: RotationDetector,
+) : ShakeDetector.Listener {
 
     private val sensorManager = context.getSystemService(SENSOR_SERVICE) as SensorManager
 
     private val shakeDetector = ShakeDetector(this)
-
-    private val rotationDetector = GyroscopeRotationDetector()
 
     private lateinit var shakeListener: () -> Unit
 
