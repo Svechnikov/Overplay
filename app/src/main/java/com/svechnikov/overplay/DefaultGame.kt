@@ -32,15 +32,12 @@ class DefaultGame(
             lifecycleOwner.repeatOnLifecycle(Lifecycle.State.RESUMED) {
                 delay(DELAY)
 
+                sensorEvents.start()
                 playerView.isVisible = true
                 playFromStart()
             }
         }
         lifecycleOwner.lifecycle.addObserver(object : DefaultLifecycleObserver {
-            override fun onResume(owner: LifecycleOwner) {
-                sensorEvents.start()
-            }
-
             override fun onPause(owner: LifecycleOwner) {
                 sensorEvents.stop()
                 player.stop()
