@@ -8,7 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.google.android.exoplayer2.SimpleExoPlayer
 import com.google.android.exoplayer2.ui.StyledPlayerView
-import com.svechnikov.overplay.location.BasicLocationProvider
+import com.svechnikov.overplay.location.KalmanFilterLocationProvider
 import com.svechnikov.overplay.rotation.GyroscopeRotationDetector
 import com.svechnikov.overplay.rotation.handlers.DefaultRotationHandler
 
@@ -41,7 +41,7 @@ class PlaybackActivity : AppCompatActivity() {
         val playerView = StyledPlayerView(this).also(::setContentView)
         val player = SimpleExoPlayer.Builder(this).build()
         val rotationDetector = GyroscopeRotationDetector()
-        val locationProvider = BasicLocationProvider(this)
+        val locationProvider = KalmanFilterLocationProvider(this)
         val sensorEvents = SensorEvents(this, rotationDetector, locationProvider)
         val rotationHandler = DefaultRotationHandler(player)
 
