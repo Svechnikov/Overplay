@@ -1,6 +1,5 @@
 package com.svechnikov.overplay
 
-import android.location.Location
 import androidx.core.view.isVisible
 import androidx.lifecycle.*
 import com.google.android.exoplayer2.MediaItem
@@ -16,8 +15,6 @@ class DefaultGame(
     private val sensorEvents: SensorEvents,
     private val rotationHandler: RotationHandler,
 ) : Game {
-
-    private var prevLocation: Location? = null
 
     override fun start(lifecycleOwner: LifecycleOwner) {
         playerView.let {
@@ -47,7 +44,7 @@ class DefaultGame(
         })
 
         sensorEvents.apply {
-            setLocationListener(::checkLocation)
+            setOnMovedAwayListener(::playFromStart)
             setRotationListener(rotationHandler::handleRotation)
             setShakeListener(player::pause)
         }
@@ -60,18 +57,8 @@ class DefaultGame(
         }
     }
 
-    private fun checkLocation(location: Location) {
-        val prevLocation = this.prevLocation ?: location.also { prevLocation = it }
-
-        if (prevLocation.distanceTo(location) >= PAUSE_DISTANCE_METERS) {
-            this.prevLocation = location
-            playFromStart()
-        }
-    }
-
     private companion object {
         const val URL = "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/WeAreGoingOnBullrun.mp4"
         const val DELAY = 4_000L
-        const val PAUSE_DISTANCE_METERS = 10f
     }
 }
