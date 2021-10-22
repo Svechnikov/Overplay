@@ -5,11 +5,13 @@ import android.content.Context.SENSOR_SERVICE
 import android.hardware.SensorManager
 import android.location.Location
 import com.squareup.seismic.ShakeDetector
+import com.svechnikov.overplay.location.LocationProvider
 import com.svechnikov.overplay.rotation.RotationDetector
 
 class SensorEvents(
     context: Context,
     private val rotationDetector: RotationDetector,
+    private val locationProvider: LocationProvider,
 ) : ShakeDetector.Listener {
 
     private val sensorManager = context.getSystemService(SENSOR_SERVICE) as SensorManager
@@ -20,9 +22,7 @@ class SensorEvents(
 
     override fun hearShake() = shakeListener()
 
-    fun setLocationListener(listener: (Location) -> Unit) {
-
-    }
+    fun setLocationListener(listener: (Location) -> Unit) = locationProvider.setListener(listener)
 
     fun setShakeListener(listener: () -> Unit) {
         shakeListener = listener
@@ -35,10 +35,12 @@ class SensorEvents(
     fun start() {
         shakeDetector.start(sensorManager)
         rotationDetector.start(sensorManager)
+        locationProvider.start()
     }
 
     fun stop() {
         shakeDetector.stop()
         rotationDetector.stop()
+        locationProvider.stop()
     }
 }
