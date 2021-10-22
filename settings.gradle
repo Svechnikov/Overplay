@@ -1,2 +1,3 @@
 rootProject.name = "Overplay"
 include ':app'
+include ':libraries:madlocationmanager'
